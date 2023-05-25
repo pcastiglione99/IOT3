@@ -7,8 +7,8 @@ typedef nx_struct radio_route_msg_t {
 
 	nx_uint16_t type;
 	nx_uint16_t sender;
-	nx_uint16_t destination;
-	nx_uint16_t value;
+	nx_uint16_t destination; // node_requested
+	nx_uint16_t value; // cost
 
 } radio_route_msg_t;
 

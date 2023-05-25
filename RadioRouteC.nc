@@ -39,7 +39,7 @@ implementation {
   typedef struct routing_entry_t{
     uint16_t destination;
     uint16_t next_hop;
-    uint16_t value;
+    uint16_t value; //cost
   } routing_entry_t;
 
   routing_entry_t routing_table[7];
