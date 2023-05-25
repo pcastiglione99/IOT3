@@ -149,12 +149,14 @@ implementation {
     if (len != sizeof(radio_count_msg_t)) {return bufPtr;}
     else {
       radio_route_msg_t* rcm = (radio_route_msg_t*)payload;
-      if (rcm->type == 0) {}
+      if (rcm->type == 0) {
+        // TODO
+      }
       else if (rcm->type == 1) {
-
+        // TODO
       }
       else if (rcm->type == 2) {
-
+        // TODO
       }
       else {
         dbgerror("RadioRouteC", "Invalid message type");
