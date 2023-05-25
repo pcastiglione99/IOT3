@@ -13,19 +13,30 @@
 
 module RadioRouteC @safe() {
   uses {
-  
+      
     /****** INTERFACES *****/
-	interface Boot;
+    interface Boot;
+    interface Leds;
+    interface Receive;
+    interface AMSend;
+    interface Timer<TMilli> as MilliTimer;
+    interface Packet;
+    interface Read<uint16_t>;
+    interface SplitControl as RadioControl;
 
-    //interfaces for communication
-	//interface for timers
-	//interface for LED
-    //other interfaces, if needed
   }
 }
 implementation {
 
   message_t packet;
+
+  typedef struct routing_entry_t{
+    uint16_t destination;
+    uint16_t next_hop;
+    uint16_t value;
+  } routing_entry_t;
+
+  routing_entry_t routing_table[7];
   
   // Variables to store the message to send
   message_t queued_packet;
