@@ -20,16 +20,22 @@ module RadioRouteC @safe() {
     interface Receive;
     interface AMSend;
     interface Timer<TMilli> as MilliTimer;
+    interface SplitControl as AMControl;
     interface Packet;
-    interface Read<uint16_t>;
-    interface SplitControl as RadioControl;
 
   }
 }
 implementation {
+  
+  const uint8_t* codice_persona = [1,0,6,5,7,8,1,6];
+  uint8_t digit_index = 0; 
+  uint16_t msg_counter = 0;
+  uint8_t led_index = 0;
+
 
   message_t packet;
-
+  
+  // Routing Table
   typedef struct routing_entry_t{
     uint16_t destination;
     uint16_t next_hop;
@@ -37,6 +43,12 @@ implementation {
   } routing_entry_t;
 
   routing_entry_t routing_table[7];
+
+  for(int i = 0; i < 7; i++) {
+    routing_table[i].destination = 0;
+    routing_table[i].next_hop = 0;
+    routing_table[i].value = 0;
+  }
   
   // Variables to store the message to send
   message_t queued_packet;
@@ -111,17 +123,19 @@ implementation {
   
   event void Boot.booted() {
     dbg("boot","Application booted.\n");
-    /* Fill it ... */
+    call AMControl.start();
   }
-
+ 
   event void AMControl.startDone(error_t err) {
-	/* Fill it ... */
+    if (err == SUCCESS) {
+      dbg("radio","Radio Started.\n");
+    }
   }
 
-  event void AMControl.stopDone(error_t err) {
-    /* Fill it ... */
-  }
+  event void AMControl.stopDone(error_t err) {}
   
+
+
   event void Timer1.fired() {
 	/*
 	* Implement here the logic to trigger the Node 1 to send the first REQ packet
@@ -130,6 +144,45 @@ implementation {
 
   event message_t* Receive.receive(message_t* bufPtr, 
 				   void* payload, uint8_t len) {
+
+    dbg("RadioRouteC", "Received packet of length %hhu.\n", len);
+    if (len != sizeof(radio_count_msg_t)) {return bufPtr;}
+    else {
+      radio_route_msg_t* rcm = (radio_route_msg_t*)payload;
+      if (rcm->type == 0) {}
+      else if (rcm->type == 1) {
+
+      }
+      else if (rcm->type == 2) {
+
+      }
+      else {
+        dbgerror("RadioRouteC", "Invalid message type");
+        return
+      }
+      
+      led_index = codice_persona[msg_counter % 8] % 3;  // msg_counter % 8 select the digit in a round robin cycle
+
+      if (led_index == 0) { 
+        call Leds.led0Toggle(); 
+        dbg("led","Led1 Toggled.\n");
+      }
+      else if (led_index == 1) { 
+        call Leds.led1Toggle(); 
+        dbg("led","Led2 Toggled.\n");
+      }
+      else if (led_index == 2) { 
+        call Leds.led2Toggle(); 
+        dbg("led","Led3 Toggled.\n");
+      }
+      else {
+        dbgerror("led", "Invalid led");
+        return
+      }
+
+      msg_counter++;
+
+
 	/*
 	* Parse the receive packet.
 	* Implement all the functionalities

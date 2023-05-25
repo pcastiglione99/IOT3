@@ -3,7 +3,7 @@
 #ifndef RADIO_ROUTE_H
 #define RADIO_ROUTE_H
 
-typedef nx_struct radio_route_msg {
+typedef nx_struct radio_route_msg_t {
 
 	nx_uint16_t type;
 	nx_uint16_t sender;
