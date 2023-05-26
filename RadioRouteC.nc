@@ -35,34 +35,50 @@ implementation {
 
   message_t packet;
   
-  void addRoutingEntry(routing_table_t* table, uint16_t destination, uint16_t next_hop, uint16_t value) {
-    if (destination <= 0 || destination > N_ENTRIES) {
-        dbg("RadioRouteC", "Destination is not valid. Cannot add this entry.\n");
-        return;
-    }
-    routing_entry_t newEntry;
-    newEntry.next_hop = next_hop;
-    newEntry.cost = cost;
-    table->entries[destination - 1] = newEntry;
+// Function to add a routing entry to the linked list routing table
+  void addRoutingEntry(routing_table_t* table, uint16_t destination, uint16_t next_hop, uint16_t cost) {
+      routing_entry_t* newEntry = (routing_entry_t*)malloc(sizeof(routing_entry_t));
+      newEntry->destination = destination;
+      newEntry->next_hop = next_hop;
+      newEntry->cost = cost;
+      newEntry->next = NULL;
+
+      if (table->head == NULL) {
+          table->head = newEntry;
+          table->tail = newEntry;
+      } else {
+          table->tail->next = newEntry;
+          table->tail = newEntry;
+      }
+
+      table->size++;
+
+      // Check if the maximum capacity is reached
+      if (table->size > table->max_capacity) {
+          // Remove the least recently used (LRU) node
+          routing_entry_t* lruNode = table->head;
+          table->head = lruNode->next;
+          free(lruNode);
+          table->size--;
+      }
   }
-  void initializeRoutingTable(routing_table_t* table) {
-    for (int i = 0; i < N_ENTRIES; i++) {
-        table->entries[i].next_hop = 0;
-        table->entries[i].cost = 0;
-    }
+  void initializeRoutingTable(routing_table_t* table, uint16_t max_capacity) {
+      table->head = NULL;
+      table->tail = NULL;
+      table->size = 0;
+      table->max_capacity = max_capacity;
   }
 
-  routing_entry_t* getRoutingEntry(routing_table_t* table, uint16_t destination) {
-    routing_entry_t* routing_entry = NULL;
-    if (destination <= 0 || destination > N_ENTRIES) {
-        dbg("RadioRouteC", "Destination is not valid. Cannot get this entry.\n");
-        return routing_entry;
-    }
-    uint16_t next_hop = table->entries[destination - 1].next_hop;
-    if (next_hop > 0 && nest_hop <= N_ENTRIES){
-      routing_entry = &(table->entries[destination - 1])
-    }
-    return routing_entry;
+  // Function to get a specific routing entry by destination
+  routing_entry_t* getRoutingEntry(const routing_table_t* table, uint16_t destination) {
+      routing_entry_t* current = table->head;
+      while (current != NULL) {
+          if (current->destination == destination) {
+              return current; 
+          }
+          current = current->next;
+      }
+      return current; // Entry with the specified destination not found
   }
 
   routing_table_t routing_table;
@@ -139,7 +155,7 @@ implementation {
   
   
   event void Boot.booted() {
-    initializeRoutingTable(&routing_table);
+    initializeRoutingTable(&routing_table, MAX_CAPACITY);
     dbg("boot","Application booted.\n");
     call AMControl.start();
   }
