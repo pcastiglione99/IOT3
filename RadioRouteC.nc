@@ -35,21 +35,38 @@ implementation {
 
   message_t packet;
   
-  // Routing Table
-  typedef struct routing_entry_t{
-    uint16_t destination;
-    uint16_t next_hop;
-    uint16_t value; //cost
-  } routing_entry_t;
-
-  routing_entry_t routing_table[7];
-
-  for(int i = 0; i < 7; i++) {
-    routing_table[i].destination = 0;
-    routing_table[i].next_hop = 0;
-    routing_table[i].value = 0;
+  void addRoutingEntry(routing_table_t* table, uint16_t destination, uint16_t next_hop, uint16_t value) {
+    if (destination <= 0 || destination > N_ENTRIES) {
+        dbg("RadioRouteC", "Destination is not valid. Cannot add this entry.\n");
+        return;
+    }
+    routing_entry_t newEntry;
+    newEntry.next_hop = next_hop;
+    newEntry.cost = cost;
+    table->entries[destination - 1] = newEntry;
   }
-  
+  void initializeRoutingTable(routing_table_t* table) {
+    for (int i = 0; i < N_ENTRIES; i++) {
+        table->entries[i].next_hop = 0;
+        table->entries[i].cost = 0;
+    }
+  }
+
+  routing_entry_t* getRoutingEntry(routing_table_t* table, uint16_t destination) {
+    routing_entry_t* routing_entry = NULL;
+    if (destination <= 0 || destination > N_ENTRIES) {
+        dbg("RadioRouteC", "Destination is not valid. Cannot get this entry.\n");
+        return routing_entry;
+    }
+    uint16_t next_hop = table->entries[destination - 1].next_hop;
+    if (next_hop > 0 && nest_hop <= N_ENTRIES){
+      routing_entry = &(table->entries[destination - 1])
+    }
+    return routing_entry;
+  }
+
+  routing_table_t routing_table;
+
   // Variables to store the message to send
   message_t queued_packet;
   uint16_t queue_addr;
@@ -122,6 +139,7 @@ implementation {
   
   
   event void Boot.booted() {
+    initializeRoutingTable(&routing_table);
     dbg("boot","Application booted.\n");
     call AMControl.start();
   }
@@ -150,12 +168,15 @@ implementation {
     else {
       radio_route_msg_t* rrm = (radio_route_msg_t*)payload;
       if (rrm->type == 0) {
+        // data_message
         // TODO
       }
       else if (rrm->type == 1) {
+        // route_request
         // TODO
       }
       else if (rrm->type == 2) {
+        // route_reply
         // TODO
       }
       else {

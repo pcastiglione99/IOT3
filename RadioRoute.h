@@ -14,6 +14,17 @@ typedef nx_struct radio_route_msg_t {
 
 enum {
   AM_RADIO_COUNT_MSG = 10,
+  N_ENTRIES = 7;
 };
+
+// Routing Table
+typedef struct routing_entry_t{
+    uint16_t next_hop;
+    uint16_t cost;
+} routing_entry_t;
+
+typedef struct {
+    routing_entry_t entries[N_ENTRIES];
+} routing_table_t;
 
 #endif
