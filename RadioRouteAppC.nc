@@ -1,28 +1,23 @@
-
- 
 #include "RadioRoute.h"
-
 
 configuration RadioRouteAppC {}
 implementation {
 /****** COMPONENTS *****/
   components MainC, RadioRouteC as App, LedsC;
+  components new AMSenderC(AM_RADIO_ROUTE_MSG);
+  components new AMReceiverC(AM_RADIO_ROUTE_MSG);
+  components new TimerMilliC() as Timer0;
+  components new TimerMilliC() as Timer1;
   components ActiveMessageC;
-  components new AMSenderC(AM_RADIO_SENSE_MSG);
-  components new AMReceiverC(AM_RADIO_SENSE_MSG);
-  components new TimerMilliC();
   
-  
-  
-  /****** INTERFACES *****/
-  //Boot interface
   App.Boot -> MainC.Boot;
   
   App.Receive -> AMReceiverC;
   App.AMSend -> AMSenderC;
-  App.RadioControl -> ActiveMessageC;
+  App.AMControl -> ActiveMessageC;
   App.Leds -> LedsC;
-  App.MilliTimer -> TimerMilliC;
+  App.Timer0 -> Timer0;
+  App.Timer1 -> Timer1;
   App.Packet -> AMSenderC;
 
 }
