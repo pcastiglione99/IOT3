@@ -14,23 +14,17 @@ typedef nx_struct radio_route_msg_t {
 
 enum {
   AM_RADIO_COUNT_MSG = 10,
-  MAX_CAPACITY = 7;
+  CAPACITY = 7;
 };
 
 // Routing Table
-typedef struct routing_entry_t {
-    uint16_t destination;
+typedef struct routing_entry_t{
     uint16_t next_hop;
     uint16_t cost;
-    struct routing_entry_t* next;
 } routing_entry_t;
 
-
-typedef struct {
-    routing_entry_t* head;
-    routing_entry_t* tail;
-    uint16_t size;
-    uint16_t max_capacity;
+typedef struct routing_table_t{
+    routing_entry_t entries[CAPACITY];
 } routing_table_t;
 
 

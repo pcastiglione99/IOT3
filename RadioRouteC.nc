@@ -27,7 +27,7 @@ module RadioRouteC @safe() {
 }
 implementation {
   
-  const uint8_t* codice_persona = [1,0,6,5,7,8,1,6];
+  const uint8_t codice_persona[8] = {1, 0, 6, 5, 7, 8, 1, 6};
   uint8_t digit_index = 0; 
   uint16_t msg_counter = 0;
   uint8_t led_index = 0;
@@ -36,49 +36,34 @@ implementation {
   message_t packet;
   
 // Function to add a routing entry to the linked list routing table
-  void addRoutingEntry(routing_table_t* table, uint16_t destination, uint16_t next_hop, uint16_t cost) {
-      routing_entry_t* newEntry = (routing_entry_t*)malloc(sizeof(routing_entry_t));
-      newEntry->destination = destination;
-      newEntry->next_hop = next_hop;
-      newEntry->cost = cost;
-      newEntry->next = NULL;
-
-      if (table->head == NULL) {
-          table->head = newEntry;
-          table->tail = newEntry;
-      } else {
-          table->tail->next = newEntry;
-          table->tail = newEntry;
-      }
-
-      table->size++;
-
-      // Check if the maximum capacity is reached
-      if (table->size > table->max_capacity) {
-          // Remove the least recently used (LRU) node
-          routing_entry_t* lruNode = table->head;
-          table->head = lruNode->next;
-          free(lruNode);
-          table->size--;
-      }
+  void addRoutingEntry(routing_table_t* table, uint16_t destination, uint16_t next_hop, uint16_t value) {
+    if (destination <= 0 || destination > CAPACITY) {
+        dbg("RadioRouteC", "Destination is not valid. Cannot add this entry.\n");
+        return;
+    }
+    routing_entry_t newEntry;
+    newEntry.next_hop = next_hop;
+    newEntry.cost = cost;
+    table->entries[destination - 1] = newEntry;
   }
-  void initializeRoutingTable(routing_table_t* table, uint16_t max_capacity) {
-      table->head = NULL;
-      table->tail = NULL;
-      table->size = 0;
-      table->max_capacity = max_capacity;
+  void initializeRoutingTable(routing_table_t* table) {
+    for (int i = 0; i < CAPACITY; i++) {
+        table->entries[i].next_hop = 0;
+        table->entries[i].cost = 0;
+    }
   }
 
-  // Function to get a specific routing entry by destination
-  routing_entry_t* getRoutingEntry(const routing_table_t* table, uint16_t destination) {
-      routing_entry_t* current = table->head;
-      while (current != NULL) {
-          if (current->destination == destination) {
-              return current; 
-          }
-          current = current->next;
-      }
-      return current; // Entry with the specified destination not found
+  routing_entry_t* getRoutingEntry(routing_table_t* table, uint16_t destination) {
+    routing_entry_t* routing_entry = NULL;
+    if (destination <= 0 || destination > CAPACITY) {
+        dbg("RadioRouteC", "Destination is not valid. Cannot get this entry.\n");
+        return routing_entry;
+    }
+    uint16_t next_hop = table->entries[destination - 1].next_hop;
+    if (next_hop > 0 && next_hop <= N_ENTRIES){
+      routing_entry = &(table->entries[destination - 1])
+    }
+    return routing_entry;
   }
 
   routing_table_t routing_table;
@@ -155,7 +140,7 @@ implementation {
   
   
   event void Boot.booted() {
-    initializeRoutingTable(&routing_table, MAX_CAPACITY);
+    initializeRoutingTable(&routing_table);
     dbg("boot","Application booted.\n");
     call AMControl.start();
   }
@@ -176,9 +161,7 @@ implementation {
 	*/
   }
 
-  event message_t* Receive.receive(message_t* bufPtr, 
-				   void* payload, uint8_t len) {
-
+  event message_t* Receive.receive(message_t* bufPtr, void* payload, uint8_t len) {
     dbg("RadioRouteC", "Received packet of length %hhu.\n", len);
     if (len != sizeof(radio_count_msg_t)) {return bufPtr;}
     else {
@@ -238,7 +221,4 @@ implementation {
 	*/ 
   }
 }
-
-
-
-
+}
