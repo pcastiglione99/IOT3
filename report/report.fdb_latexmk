@@ -1,0 +1,25 @@
+# Fdb version 4
+["pdflatex"] 1685349521 "report.tex" "report.pdf" "report" 1685349521 0
+  "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1680514707 3524 cb3e574dea2d1052e39280babc910dc8 ""
+  "/usr/share/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1680514707 1324 c910af8c371558dc20f2d7822f66fe64 ""
+  "/usr/share/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm" 1680514707 1524 4414a8315f39513458b80dfc63bff03a ""
+  "/usr/share/texmf-dist/fonts/tfm/public/cm/cmr12.tfm" 1680514707 1288 655e228510b4c2a1abe905c368440826 ""
+  "/usr/share/texmf-dist/fonts/tfm/public/cm/cmr17.tfm" 1680514707 1292 296a67155bdbfc32aa9c636f21e91433 ""
+  "/usr/share/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm" 1680514707 1124 6c73e740cf17375f03eec0ee63599741 ""
+  "/usr/share/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm" 1680514707 772 9a936b7f5e2ff0557fce0f62822f0bbf ""
+  "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1680514707 32080 340ef9bf63678554ee606688e7b5339d ""
+  "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1680514707 32722 d7379af29a190c3f453aba36302ff5a9 ""
+  "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb" 1680514707 24252 1e4e051947e12dfb50fee0b7f4e26e3a ""
+  "/usr/share/texmf-dist/tex/latex/base/article.cls" 1680514707 20144 d5ecf0a5140c8d8d8b72cbe86e320eff ""
+  "/usr/share/texmf-dist/tex/latex/base/size12.clo" 1680514707 8449 c314623021fbddd0180c05345324933c ""
+  "/usr/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def" 1680514707 30429 213676d4c7327a21d91ddaed900e7b81 ""
+  "/usr/share/texmf-dist/web2c/texmf.cnf" 1680514707 39911 2da6c67557ec033436fe5418a70a8a61 ""
+  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1680530459 334353 c825108cbc13fa4a18a274c473196142 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1680530430 8204064 78a89849db9a52b0e1b3ab38b6cf3a65 ""
+  "report.aux" 1685349521 319 c7a9162e9f2f77956e5840bc46d82ad7 "pdflatex"
+  "report.tex" 1685349520 283 13c9ba7d1a588c46370128d74f93713d ""
+  (generated)
+  "report.aux"
+  "report.log"
+  "report.pdf"
+  (rewritten before read)
