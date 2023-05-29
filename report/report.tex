@@ -45,11 +45,18 @@ At the beginning, right after the boot, the radio module was activated and a fiv
 Before the sending of a message, the variabele \texttt{locked} is checked in order to check if the radio module is in use or not.
 If the radio is free, 
 \subsubsection{Receive}
-Three types of message can be received:
+Received messages are handled according to their type:
 \begin{itemize}
-	\item{\textbf{Data Message}}
-	\item{\textbf{Route Request}}
-	\item{\textbf{Route Reply}}
+	\item{\textbf{Data Message}}\\
+		If the receiver node is not the intended destination then it checks if a route to the destination is present in its routing table.
+		If a route is present then it forwards the message to the next hop.
+	\item{\textbf{Route Request}}\\
+		If the receiver node is the intended destination of a route request then it answers back sending a \texttt{Route Reply} broadcast message.
+		Otherwise it broadcast again the route request message to its neighboors.
+		
+	\item{\textbf{Route Reply}}\\
+		When a \texttt{Route Reply} is received the nodes check their routing table and update it if the recieved cost for the destination is lower than the stored one.  
 \end{itemize}
+\subsection{Led Control}
 \section{Results}
 \end{document}
