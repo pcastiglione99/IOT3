@@ -8,7 +8,6 @@
  
 #include "Timer.h"
 #include "RadioRoute.h"
-#include <string.h>
 
 module RadioRouteC @safe() {
   uses {
@@ -33,7 +32,6 @@ implementation {
   uint8_t digit_index = 0; 
   uint8_t msg_counter = 0;
   uint8_t led_index = 0;
-  char led_history[200];
   
   message_t packet;
 
@@ -222,10 +220,8 @@ implementation {
       // radio_route_msg_t* rrm = (radio_route_msg_t*)call Packet.getPayload(&packet, sizeof(radio_route_msg_t));
       route_entry_t* entry = NULL;
       radio_route_msg_t* rrm = (radio_route_msg_t*)payload;
-      // dbg("radio_rec", "AAAA: %p %p\n", (void*)&packet, (void*)bufPtr);
       dbgPacketInfo(rrm, "radio_rec", "Packet received...");
-      // dbg("radio_rec", "Received packet Type:%hu Sender:%hu Destination:%hu Value:%hu length %hhu\n", rrm->type, rrm->sender, rrm->destination, rrm->value, len);
-      switch (rrm->type){
+grep      switch (rrm->type){
         case 0:
           // data_message
           if (rrm->destination == TOS_NODE_ID){
@@ -288,17 +284,14 @@ implementation {
         case 0:
           call Leds.led0Toggle(); 
           dbg("led_0","Led0 Toggled.\n");
-          strcat(led_history, "100,");
           break;
         case 1:
           call Leds.led1Toggle(); 
           dbg("led_1","Led1 Toggled.\n");
-          strcat(led_history, "010,");
           break;
         case 2:
           call Leds.led2Toggle(); 
           dbg("led_2","Led2 Toggled.\n");
-          strcat(led_history, "001,");
           break;
         default:
           dbgerror("radio_rec", "Led index %d out of range\n", led_index);
@@ -306,9 +299,6 @@ implementation {
 
       }
       msg_counter++;
-      if (TOS_NODE_ID == 6){
-        dbg("radio_rec", "[%s]\n", led_history);
-      }  
     }
     return bufPtr;
 	
