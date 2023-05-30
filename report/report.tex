@@ -14,7 +14,7 @@
 \maketitle
 
 \section*{Introduction}
-The goal of this challenge was to implement a routing algorithm in order to be able to send a packet from Mote1 to Mote2.
+The goal of this challenge was to implement a routing algorithm in order to perform the unicast packet sending of a data packet from Mote1 to Mote7.
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{topology.png}
 \caption{Network Topology}
@@ -40,24 +40,32 @@ typedef struct route_entry_t {
 
 \subsection*{RadioRouteC.nc}
 \subsubsection*{Variables} 
-\texttt{waiting\_packet} and \texttt{waiting\_address} were defined in order to store the content and the destination address of the message to be sent when the routing table is empty.
+\begin{itemize}
+	\item{\texttt{waiting\_packet:}} Stores a packet that is waiting for a routing table update before it can be sent. It allows the code to delay the sending of the packet until a valid route is obtained.
+	\item{\texttt{waiting\_address:}} Stores the destination address of a packet that is waiting for a routing table update before it can be sent.
+	\item{\texttt{locked:}} Controls the sending of packets to avoid overlapping transmissions. When a packet needs to be sent, the "locked" variable is checked. If it is set to "TRUE," it means that a packet transmission is already in progress, and the sending is aborted. It is later set back to "FALSE" when the sending is completed.
+	\item{\texttt{msg\_counter:}} Keep track of the number of messages received by a node.
+	\item{\texttt{codice\_persona:}} Array containg the codice persona of the leader.
+
+\end{itemize}
 \subsubsection*{Functions}
 \begin{itemize}
-	\item{\texttt{initializeRoutingTable}}
-	\item{\texttt{addRoutingEntry}}
-	\item{\texttt{dbgPacketInfo}}
+	\item{\texttt{initializeRoutingTable:}} Initializes the routing table.
+	\item{\texttt{getRoutingEntry:}} Retrieves a routing entry from a routing table based on a given destination address
+	\item{\texttt{addRoutingEntry:}} Adds or updates an entry to the routing table. 
+	\item{\texttt{dbgPacketInfo:}} Prints debug information about packets.
 \end{itemize}
 
 \subsubsection*{Send Event}
 The sending of a message is implemented in the 	\texttt{actual\_send} function.
-Before the sending of a message, the variable \texttt{locked} is evaluated in order to check if the radio module is in use or not.
-If the radio is free, the sending node checks if a route for the destination is present in its routing table.
+Before the sending of a message, the variable \texttt{locked} is evaluated in order to check if a packet is already being sent or not.
+If the module is not locked, it proceeds with sending the packet. It first checks the routing table to determine the next hop for the packet's destination. If a routing entry is found, it uses the next hop as the address for sending. If no routing entry is found, it uses the provided address parameter as the destination address.
 In case of data message with null entry in the routing table, \texttt{waiting\_packet} and \texttt{waiting\_address} are set and a routing request sent in broadcast.
 \subsubsection*{Receive Event}
 Received messages are handled according to their type:
 \begin{itemize}
 	\item{\textbf{Data Message}}\\
-		If the receiver is not the intended destination of a message then it checks if a route to the destination is present in its routing table. If a route is present then it forwards the message to the next hop.
+		Checks if the message is intended for the current node. If not, it checks if a route to the destination is present in its routing table. If a route is present then it forwards the message to the next hop.
 	\item{\textbf{Route Request}}\\
 		If the receiver node is the intended destination of a route request or if the node has a non empty entry in the routing table, then it answers back sending a \texttt{Route Reply} broadcast message.
 		Otherwise it broadcast again the route request message to its neighbors.
@@ -68,5 +76,5 @@ Received messages are handled according to their type:
 		In this case, it proceeds with the packet forwarding to the updated next hop.
 \end{itemize}
 \subsection*{Led Control}
-\section*{Results}
+The LED index is calculated based on the \texttt{msg\_counter} variable and the \texttt{codice\_persona} array. The \texttt{msg\_counter} is incremented each time a packet is received, and it is used to select the digit in a round-robin cycle from the \texttt{codice\_persona} array. The digit is then used to determine the LED index by taking its modulo with 3. At this point the led status is toggled using \texttt{Leds.ledToggle()}
 \end{document}
