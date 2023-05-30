@@ -1,0 +1,124 @@
+DEBUG (1): APP BOOTED.
+DEBUG (7): APP BOOTED.
+DEBUG (3): APP BOOTED.
+DEBUG (6): APP BOOTED.
+DEBUG (2): APP BOOTED.
+DEBUG (5): APP BOOTED.
+DEBUG (4): APP BOOTED.
+DEBUG (7): Radio started.
+DEBUG (6): Radio started.
+DEBUG (1): Radio started.
+DEBUG (3): Radio started.
+DEBUG (4): Radio started.
+DEBUG (2): Radio started.
+DEBUG (5): Radio started.
+DEBUG (1): Queuing packets to be sent on route_reply...
+DEBUG (1): Packet sent...[Route request] Type:1 Node Requested:7
+DEBUG (3): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (3): Led1 Toggled.
+DEBUG (2): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (2): Led1 Toggled.
+DEBUG (1): Packet sent... at time 0:0:4.948883028
+DEBUG (2): Packet sent...[Route request] Type:1 Node Requested:7
+DEBUG (4): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (4): Led1 Toggled.
+DEBUG (1): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (1): Led1 Toggled.
+DEBUG (2): Packet sent... at time 0:0:5.124435392
+DEBUG (1): Packet sent...[Route request] Type:1 Node Requested:7
+DEBUG (2): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (2): Led0 Toggled.
+DEBUG (3): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (3): Led0 Toggled.
+DEBUG (1): Packet sent... at time 0:0:5.192047079
+DEBUG (3): Packet sent...[Route request] Type:1 Node Requested:7
+DEBUG (5): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (5): Led1 Toggled.
+DEBUG (4): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (4): Led0 Toggled.
+DEBUG (1): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (1): Led0 Toggled.
+DEBUG (3): Packet sent... at time 0:0:5.218902540
+DEBUG (4): Packet sent...[Route request] Type:1 Node Requested:7
+DEBUG (6): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (6): Led1 Toggled.
+DEBUG (3): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (3): Led0 Toggled.
+DEBUG (2): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (2): Led0 Toggled.
+DEBUG (4): Packet sent... at time 0:0:5.488327024
+DEBUG (5): Packet sent...[Route request] Type:1 Node Requested:7
+DEBUG (7): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (7): Led1 Toggled.
+DEBUG (6): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (6): Led0 Toggled.
+DEBUG (3): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (3): Led2 Toggled.
+DEBUG (5): Packet sent... at time 0:0:5.688842764
+DEBUG (6): Packet sent...[Route request] Type:1 Node Requested:7
+DEBUG (4): Packet received...[Route request] Type:1 Node Requested:7
+DEBUG (4): Led0 Toggled.
+DEBUG (6): Packet sent... at time 0:0:6.059631340
+DEBUG (7): Packet sent...[Route reply] Type:2 Sender:7 Node Requested:7 Cost:1
+DEBUG (6): Packet received...[Route reply] Type:2 Sender:7 Node Requested:7 Cost:1
+DEBUG (6): Update routing table, destination:7 next_hop:7 cost:1
+DEBUG (6): Led0 Toggled.
+DEBUG (5): Packet received...[Route reply] Type:2 Sender:7 Node Requested:7 Cost:1
+DEBUG (5): Update routing table, destination:7 next_hop:7 cost:1
+DEBUG (5): Led0 Toggled.
+DEBUG (7): Packet sent... at time 0:0:6.365509018
+DEBUG (5): Packet sent...[Route reply] Type:2 Sender:5 Node Requested:7 Cost:2
+DEBUG (7): Packet received...[Route reply] Type:2 Sender:5 Node Requested:7 Cost:2
+DEBUG (7): Led0 Toggled.
+DEBUG (6): Packet received...[Route reply] Type:2 Sender:5 Node Requested:7 Cost:2
+DEBUG (6): Led2 Toggled.
+DEBUG (3): Packet received...[Route reply] Type:2 Sender:5 Node Requested:7 Cost:2
+DEBUG (3): Update routing table, destination:7 next_hop:5 cost:2
+DEBUG (3): Led1 Toggled.
+DEBUG (5): Packet sent... at time 0:0:6.842819166
+DEBUG (6): Packet sent...[Route reply] Type:2 Sender:6 Node Requested:7 Cost:2
+DEBUG (7): Packet received...[Route reply] Type:2 Sender:6 Node Requested:7 Cost:2
+DEBUG (7): Led0 Toggled.
+DEBUG (5): Packet received...[Route reply] Type:2 Sender:6 Node Requested:7 Cost:2
+DEBUG (5): Led0 Toggled.
+DEBUG (4): Packet received...[Route reply] Type:2 Sender:6 Node Requested:7 Cost:2
+DEBUG (4): Update routing table, destination:7 next_hop:6 cost:2
+DEBUG (4): Led2 Toggled.
+DEBUG (6): Packet sent... at time 0:0:6.937118525
+DEBUG (3): Packet sent...[Route reply] Type:2 Sender:3 Node Requested:7 Cost:3
+DEBUG (5): Packet received...[Route reply] Type:2 Sender:3 Node Requested:7 Cost:3
+DEBUG (5): Led2 Toggled.
+DEBUG (4): Packet received...[Route reply] Type:2 Sender:3 Node Requested:7 Cost:3
+DEBUG (4): Led1 Toggled.
+DEBUG (1): Packet received...[Route reply] Type:2 Sender:3 Node Requested:7 Cost:3
+DEBUG (1): Update routing table, destination:7 next_hop:3 cost:3
+DEBUG (1): Led0 Toggled.
+DEBUG (3): Packet sent... at time 0:0:7.112808177
+DEBUG (1): Packet sent...[Data message] Type:0 Sender:1 Destination:7 Value:5
+DEBUG (3): Packet received...[Data message] Type:0 Sender:1 Destination:7 Value:5
+DEBUG (3): Led2 Toggled.
+DEBUG (1): Packet sent... at time 0:0:7.180923419
+DEBUG (4): Packet sent...[Route reply] Type:2 Sender:4 Node Requested:7 Cost:3
+DEBUG (6): Packet received...[Route reply] Type:2 Sender:4 Node Requested:7 Cost:3
+DEBUG (6): Led1 Toggled.
+DEBUG (3): Packet received...[Route reply] Type:2 Sender:4 Node Requested:7 Cost:3
+DEBUG (3): Led1 Toggled.
+DEBUG (2): Packet received...[Route reply] Type:2 Sender:4 Node Requested:7 Cost:3
+DEBUG (2): Update routing table, destination:7 next_hop:4 cost:3
+DEBUG (2): Led2 Toggled.
+DEBUG (4): Packet sent... at time 0:0:7.301223750
+DEBUG (3): Packet sent...[Data message] Type:0 Sender:1 Destination:7 Value:5
+DEBUG (5): Packet received...[Data message] Type:0 Sender:1 Destination:7 Value:5
+DEBUG (5): Led1 Toggled.
+DEBUG (3): Packet sent... at time 0:0:7.451385449
+DEBUG (2): Packet sent...[Route reply] Type:2 Sender:2 Node Requested:7 Cost:4
+DEBUG (4): Packet received...[Route reply] Type:2 Sender:2 Node Requested:7 Cost:4
+DEBUG (4): Led2 Toggled.
+DEBUG (1): Packet received...[Route reply] Type:2 Sender:2 Node Requested:7 Cost:4
+DEBUG (1): Led2 Toggled.
+DEBUG (2): Packet sent... at time 0:0:7.471130372
+DEBUG (5): Packet sent...[Data message] Type:0 Sender:1 Destination:7 Value:5
+DEBUG (7): Packet received...[Data message] Type:0 Sender:1 Destination:7 Value:5
+DEBUG (7): [Data Message] packet received hop by hop!!
+DEBUG (7): Led2 Toggled.
+DEBUG (5): Packet sent... at time 0:0:7.923400862
