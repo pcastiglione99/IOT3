@@ -221,7 +221,7 @@ implementation {
       route_entry_t* entry = NULL;
       radio_route_msg_t* rrm = (radio_route_msg_t*)payload;
       dbgPacketInfo(rrm, "radio_rec", "Packet received...");
-grep      switch (rrm->type){
+      switch (rrm->type){
         case 0:
           // data_message
           if (rrm->destination == TOS_NODE_ID){
