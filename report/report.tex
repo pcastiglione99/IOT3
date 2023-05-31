@@ -13,33 +13,19 @@
 \begin{document}
 \maketitle
 
-\section*{Introduction}
-The goal of this challenge was to implement a routing algorithm in order to perform the unicast packet sending of a data packet from Mote1 to Mote7.
-\begin{figure}[h]
-\includegraphics[width=\textwidth]{topology.png}
-\caption{Network Topology}
-\end{figure}
-\section*{Code}
-\subsection*{RadioRoute.h}
+\section*{RadioRoute.h}
 In the header file, the data structures for the messages and for the routing table were defined.
-\begin{lstlisting}[language=C,basicstyle=\footnotesize]
-typedef nx_struct radio_route_msg {
-	nx_uint16_t type;
-	nx_uint16_t sender;
-	nx_uint16_t destination; // node_requested
-	nx_uint16_t value; // cost
-} radio_route_msg_t;
-\end{lstlisting}
+\begin{figure}[h]
+\includegraphics[scale=0.5]{msg.png}
+\caption{Message data structure}
+\end{figure}
+\begin{figure}[h]
+\includegraphics[scale=0.5]{entry.png}
+\caption{Entry of the routing table}
+\end{figure}
 
-\begin{lstlisting}[language=C,basicstyle=\footnotesize]
-typedef struct route_entry_t {
-	uint16_t next_hop;
-  	uint16_t cost;
-} route_entry_t;
-\end{lstlisting}
-
-\subsection*{RadioRouteC.nc}
-\subsubsection*{Variables} 
+\section*{RadioRouteC.nc}
+\subsection*{Variables} 
 \begin{itemize}
 	\item{\texttt{waiting\_packet:}} Stores a packet that is waiting for a routing table update before it can be sent. It allows the code to delay the sending of the packet until a valid route is obtained.
 	\item{\texttt{waiting\_address:}} Stores the destination address of a packet that is waiting for a routing table update before it can be sent.
@@ -48,20 +34,21 @@ typedef struct route_entry_t {
 	\item{\texttt{codice\_persona:}} Array containg the codice persona of the leader.
 
 \end{itemize}
-\subsubsection*{Functions}
+\subsection*{Functions}
 \begin{itemize}
 	\item{\texttt{initializeRoutingTable:}} Initializes the routing table.
 	\item{\texttt{getRoutingEntry:}} Retrieves a routing entry from a routing table based on a given destination address
 	\item{\texttt{addRoutingEntry:}} Adds or updates an entry to the routing table. 
 	\item{\texttt{dbgPacketInfo:}} Prints debug information about packets.
 \end{itemize}
-
-\subsubsection*{Send Event}
+\subsection*{Boot}
+At the boot of a node, the routing table is created and the radio module is started. When the radio module has finished the process of starting, a five seconds timer is started for the node `1'.
+\subsection*{Send Event}
 The sending of a message is implemented in the 	\texttt{actual\_send} function.
 Before the sending of a message, the variable \texttt{locked} is evaluated in order to check if a packet is already being sent or not.
 If the module is not locked, it proceeds with sending the packet. It first checks the routing table to determine the next hop for the packet's destination. If a routing entry is found, it uses the next hop as the address for sending. If no routing entry is found, it uses the provided address parameter as the destination address.
 In case of data message with null entry in the routing table, \texttt{waiting\_packet} and \texttt{waiting\_address} are set and a routing request sent in broadcast.
-\subsubsection*{Receive Event}
+\subsection*{Receive Event}
 Received messages are handled according to their type:
 \begin{itemize}
 	\item{\textbf{Data Message}}\\
@@ -75,6 +62,6 @@ Received messages are handled according to their type:
 		Also, the nodes check weather there is a \texttt{waiting\_packet} with a \texttt{waiting\_address} equals to the updated entry destination address.
 		In this case, it proceeds with the packet forwarding to the updated next hop.
 \end{itemize}
-\subsection*{Led Control}
+\section*{Led Control}
 The LED index is calculated based on the \texttt{msg\_counter} variable and the \texttt{codice\_persona} array. The \texttt{msg\_counter} is incremented each time a packet is received, and it is used to select the digit in a round-robin cycle from the \texttt{codice\_persona} array. The digit is then used to determine the LED index by taking its modulo with 3. At this point the led status is toggled using \texttt{Leds.ledToggle()}
 \end{document}
