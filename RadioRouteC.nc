@@ -34,8 +34,6 @@ implementation {
   uint8_t led_index = 0;
   
   message_t packet;
-
-
   
   // Variables to store the message to send
   message_t queued_packet;

@@ -29,8 +29,8 @@ In the header file, the data structures for the messages and for the routing tab
 \begin{itemize}
 	\item{\texttt{waiting\_packet:}} Stores a packet that is waiting for a routing table update before it can be sent. It allows the code to delay the sending of the packet until a valid route is obtained.
 	\item{\texttt{waiting\_address:}} Stores the destination address of a packet that is waiting for a routing table update before it can be sent.
-	\item{\texttt{locked:}} Controls the sending of packets to avoid overlapping transmissions. When a packet needs to be sent, the "locked" variable is checked. If it is set to "TRUE," it means that a packet transmission is already in progress, and the sending is aborted. It is later set back to "FALSE" when the sending is completed.
-	\item{\texttt{msg\_counter:}} Keep track of the number of messages received by a node.
+	\item{\texttt{locked:}} Controls the sending of packets to avoid overlapping transmissions. When a packet needs to be sent, the ``locked" variable is checked. If it is set to ``TRUE", it means that a packet transmission is already in progress, and the sending is aborted. It is later set back to ``FALSE" when the sending is completed.
+	\item{\texttt{msg\_counter:}} Keeps track of the number of messages received by a node.
 	\item{\texttt{codice\_persona:}} Array containg the codice persona of the leader.
 
 \end{itemize}
@@ -47,7 +47,7 @@ At the boot of a node, the routing table is created and the radio module is star
 The sending of a message is implemented in the 	\texttt{actual\_send} function.
 Before the sending of a message, the variable \texttt{locked} is evaluated in order to check if a packet is already being sent or not.
 If the module is not locked, it proceeds with sending the packet. It first checks the routing table to determine the next hop for the packet's destination. If a routing entry is found, it uses the next hop as the address for sending. If no routing entry is found, it uses the provided address parameter as the destination address.
-In case of data message with null entry in the routing table, \texttt{waiting\_packet} and \texttt{waiting\_address} are set and a routing request sent in broadcast.
+In case of data message with null entry in the routing table, \texttt{waiting\_packet} and \texttt{waiting\_address} are set and a routing request is sent in broadcast.
 \subsection*{Receive Event}
 Received messages are handled according to their type:
 \begin{itemize}
